@@ -32,3 +32,25 @@
 label {
   flex-basis: 10%;
 }
+
+button {
+  padding: 10px 20px;
+  background-color: grey;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s;
+  &:hover {
+    background-color: rgba(grey, 0.4);
+  }
+}
+
+.top-bar {
+  margin-left: 1rem;
+}

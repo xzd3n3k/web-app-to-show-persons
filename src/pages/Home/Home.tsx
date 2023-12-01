@@ -21,25 +21,36 @@ export default function Home(): ReactElement {
     const currentData: Array<TUser> = filteredData.slice(indexOfFirst, indexOfLast);
     const paginate = (pageNumber: number) => setCurrentPage(pageNumber);
 
-    useEffect(() => {
+    const fetchData = async (api: string) => {
+        const data: TUsers | null = await fetchAPI(api);
+        data?.results.forEach((result) => {usersData.push(result);fetched++;});
+        forceUpdate();
+        if (data?.next) {
+            fetchData(data.next);
+        } else {
+            const jsonItems = JSON.stringify(usersData);
+            localStorage.setItem('items', jsonItems);
+            setIsLoaded(true);
+            setFilteredData(searchData(usersData, ''));
 
-        const fetchData = async (api: string) => {
-            const data: TUsers | null = await fetchAPI(api);
-            data?.results.forEach((result) => {usersData.push(result);fetched++;});
-            forceUpdate();
-            if (data?.next) {
-                fetchData(data.next);
-            } else {
-                setIsLoaded(true);
-                setFilteredData(searchData(usersData, ''));
-
-                return;
-            }
+            return;
         }
+    }
 
-        setIsLoaded(false);
-        fetchData(API);
-
+    useEffect(() => {
+        const storedItems = localStorage.getItem('items');
+        console.log(storedItems);
+        if (storedItems) {
+            if (storedItems.length === 0) {
+                fetchData(API);
+            } else {
+                usersData = (JSON.parse(storedItems));
+                setFilteredData(searchData(usersData, ''));
+                setIsLoaded(true);
+            }
+        } else {
+            fetchData(API);
+        }
     }, []);
 
     function searchData(data: Array<TUser>, searchValue: string): Array<TUser> {
@@ -50,9 +61,12 @@ export default function Home(): ReactElement {
         <div className="home-container">
             {isLoaded ?
                 <div>
-                    <span className="search-container">
-                        <label>Search</label>
-                        <input className="search-input" type="text" onChange={event => {setFilteredData(searchData(usersData, event.target.value.toLowerCase())); setCurrentPage(1)}}/>
+                    <span className="top-bar">
+                    <button onClick={()=>{localStorage.removeItem('items'); usersData = []; setIsLoaded(false); fetchData(API);}}>Fetch data</button>
+                        <span className="search-container">
+                            <label>Search:</label>
+                            <input className="search-input" type="text" onChange={event => {setFilteredData(searchData(usersData, event.target.value.toLowerCase())); setCurrentPage(1)}}/>
+                        </span>
                     </span>
                     <UsersTable data={currentData}/>
                     <Pagination usersPerPage={itemsPerPage} totalUsers={filteredData.length} paginate={paginate} currentPage={currentPage}/>
