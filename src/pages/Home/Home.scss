@@ -1,0 +1,34 @@
+.home-container {
+
+}
+
+.loading-container {
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.search-input {
+  padding: 8px;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+  flex-basis: 80%;
+}
+
+.search-container {
+  width: 50%;
+  display: inline-flex;
+  gap: 1rem;
+  margin: 1rem 0 0 1rem;
+  flex-flow: row wrap;
+  align-items: center;
+}
+
+label {
+  flex-basis: 10%;
+}
