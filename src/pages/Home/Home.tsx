@@ -39,7 +39,6 @@ export default function Home(): ReactElement {
 
     useEffect(() => {
         const storedItems = localStorage.getItem('items');
-        console.log(storedItems);
         if (storedItems) {
             if (storedItems.length === 0) {
                 fetchData(API);
