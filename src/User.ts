@@ -10,7 +10,8 @@ type TUser = {
     "birth_year": string,
     "gender": string,
     "homeworld": string,
-    "homeworld_data": TWorld | null
+    "homeworld_data": TWorld | null,
+    "url": string,
 }
 
 export default TUser;

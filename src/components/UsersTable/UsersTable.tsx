@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import './UsersTable.scss';
 import TUser from "../../User";
+import getUserId from "../../getUserId";
 
 interface IProps {
     data: Array<TUser>;
@@ -21,7 +22,7 @@ export default function UsersTable({data}: IProps): ReactElement {
                         </thead>
                         <tbody>
                             {data.map((person, index) => (
-                                <tr key={index}>
+                                <tr key={index} onClick={() => {window.location.href = `/detail?id=${getUserId(person)}`}}>
                                     <td>{person.name}</td>
                                     <td>{person.birth_year}</td>
                                 </tr>
@@ -29,7 +30,7 @@ export default function UsersTable({data}: IProps): ReactElement {
                         </tbody>
                     </table>
                 </div> :
-                <div>
+                <div className="loading-container">
                     Empty data source
                 </div>}
         </div>
