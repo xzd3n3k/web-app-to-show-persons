@@ -1,5 +1,3 @@
-import TWorld from "./World";
-
 type TUser = {
     "name": string,
     "height": string,

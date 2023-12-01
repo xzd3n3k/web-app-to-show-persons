@@ -57,7 +57,7 @@ export default function Home(): ReactElement {
     }
 
     return (
-        <div className="home-container">
+        <div>
             {isLoaded ?
                 <div>
                     <span className="top-bar">
